@@ -57,3 +57,22 @@ code {
 .content .by {
   font-weight: bold;
 }
+
+.tweet {
+  list-style-type: none;
+  margin-bottom: 10px;
+}
+
+.profile_pic {
+  float: left;
+  margin-right: 10px;
+}
+
+.name .tweet_text .re_tweet{
+  float: right;
+  margin-left: 50px;
+}
+
+.name {
+  font-weight: bold;
+}

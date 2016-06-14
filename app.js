@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var routes = require('./routes/');
 var bodyParser = require('body-parser');
+var socketio = require('socket.io');
 
 var swig = require('swig');
 
@@ -19,7 +20,7 @@ app.use(function(req, res, next) {
 	next();
 });
 
-app.use('/', routes);
+app.use('/', routes(io));
 app.use(express.static('public'));
 
 
@@ -29,4 +30,5 @@ app.use(function(err, req, res, next) {
 	res.end();
 });
 
-app.listen(3005);
+var server = app.listen(3005);
+var io = socketio.listen(server);

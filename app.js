@@ -1,12 +1,27 @@
-var Express = require('express');
-var app = new Express();
+var express = require('express');
+var app = express();
+var routes = require('./routes/');
 
-app.use(function(req,res,next) {
-	console.log("New Request: ", req.path);
+var swig = require('swig');
+
+app.engine('html', swig.renderFile);
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
+swig.setDefaults({ cache: false });
+
+app.use(function(req, res, next) {
+	console.log(req.method, req.path, res.statusCode);
 	next();
 });
 
-app.get('/', function(req,res,next) {
-	res.send("Welcome to our twitter clone");
-})
-app.listen(3003);
+app.use('/', routes);
+app.use(express.static('public'));
+
+
+// ERROR HANDLING
+app.use(function(err, req, res, next) {
+	if (err) console.error('Caught an error', err);
+	res.end();
+});
+
+app.listen(3005);
